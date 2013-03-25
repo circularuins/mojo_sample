@@ -27,7 +27,7 @@ post '/create' => sub {
     # Chech message length
     return $self->render( template => 'error', message => 'Message is too long' ) if length $message > 100;
 
-    # Datsa and time
+    # Data and time
     my ( $sec, $min, $hour, $day, $month, $year ) = localtime;
     $month = $month + 1;
     $year = $year + 1900;

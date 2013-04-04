@@ -12,22 +12,20 @@ my %answer = ( 0 => "ババアッ！",
                4 => "ぅおとぅくぅおいぃっす！",
                5 => "ぼく、いぬじゃないよ？",
                6 => "ぼく、いぬだよ？",
-               7 => "sogoood♪",
-               8 => "ぼく、ひがいしゃだよ？",
-               9 => "だまればばあ！",
-               10 => "わしもじゃ",
-               11 => "フォッ!?",
-               12 => "奈良のおとうさん、おかあさん、おにいさん、おねえさん、おじいさん、おばあさん",
-               13 => "奈良のおとうさん、おかあさん、おにいさん、おねえさん、おじいさん、おばあさん、、、、お、お、お、おぅとくぅおーーーー！",
-               14 => "奈良のおとうさん、おかあさん、おにいさん、おねえさん、おじいさん、おばあさん、、、、お、お、お、ママー！",
-               15 => "ぼく、いぬなの？",
-               16 => "おとこって……ゲスだよ！",
-               17 => "ママやらせろっ",
-               18 => "おとこやらせろっ",
+               7 => "ぼく、ひがいしゃだよ？",
+               8 => "だまればばあ！",
+               9 => "奈良のおとうさん、おかあさん、おにいさん、おねえさん、おじいさん、おばあさん",
+               10 => "奈良のおとうさん、おかあさん、おにいさん、おねえさん、おじいさん、おばあさん、、、、お、お、お、おぅとくぅおーーーー！",
+               11 => "奈良のおとうさん、おかあさん、おにいさん、おねえさん、おじいさん、おばあさん、、、、お、お、お、ママー！",
+               12 => "ぼく、いぬなの？",
+               13 => "おとこって……ゲスだよ！",
+               14 => "ママやらせろっ",
+               15 => "おとこやらせろっ",
+               16 => "",
            );
 
 # Data file (app is Mojolicious object. home is Mojo::Home object)
-my $data_file = app->home->rel_file( 'bbs_data.txt');
+my $data_file = app->home->rel_file( 'bbs_data2.txt');
 
 # Create entry
 post '/create' => sub {
@@ -37,7 +35,14 @@ post '/create' => sub {
     my $message = $self->param( 'message' );
 
     # Random answer
-    my $random_answer = $answer{int(rand scalar(keys(%answer)))};
+    my $random_answer;
+    my $rand = int(rand scalar(keys(%answer)));
+    if ($rand == 16) {
+        $random_answer = $message . "ってなに？";
+    }
+    else {
+        $random_answer = $answer{$rand};
+    }
 
     # Display error page if message is not exist.
     return $self->render( template => 'error', message => 'Please input message' ) unless $message;
